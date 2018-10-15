@@ -15,14 +15,15 @@ public class matchListner  implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-        while (true){
+       /* while (true){
             try {
                 Thread.currentThread().sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             System.out.println("=====appName :"+appversion.getName());
-        }
+        }*/
+        System.out.println("=====appName :"+appversion.getName());
     }
 
     @Override
