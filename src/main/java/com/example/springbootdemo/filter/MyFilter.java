@@ -2,8 +2,11 @@ package com.example.springbootdemo.filter;
 
 import com.example.springbootdemo.domain.MyRequestWrapper;
 import com.example.springbootdemo.util.MDUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,10 +17,16 @@ import java.security.NoSuchAlgorithmException;
 
 
 @Component
-@WebFilter
+@WebFilter(urlPatterns = {"/authen/test1", "/hello"})
 public class MyFilter implements Filter {
+
+    Logger log = LoggerFactory.getLogger(MyFilter.class);
+
+
+    Logger server_log = com.example.springbootdemo.util.LoggerFactory.getServerInfoLogger(MyFilter.class);
+
     @Value("${permitted-ips}")
-    private String permittedId;
+    private String[] permittedIps;
 
     @Value("${secret}")
     private String secret;
@@ -32,15 +41,19 @@ public class MyFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("entre authentic  filter！");
+        //log.info("entre authentic  filter！:"+permittedIps[0]);
+        server_log.info("entre authentic  filter！:"+permittedIps[0]);
         if (Boolean.valueOf(secretSwitch)){
             HttpServletRequest res = (HttpServletRequest) servletRequest;
             HttpServletResponse rep = (HttpServletResponse) servletResponse;
             String authorization = res.getHeader("Authorization");
+            if(StringUtils.isEmpty(authorization)){
+                rep.sendError(333,"anthorization is null!");
+                return ;
+            }
             System.out.println("auth authrization :" + authorization);
-
             String[] authparams = authorization.split(",");
-            //cardid="1234554321",timestamp="9897969594",signature="a69eae32a0ec746d5f6bf9bf9771ae36"
+            //cardid="1234554321",timestamp="9897969594",signature="a69eae32a0ec746d5f6bf9bf977"
             String cardid = authparams[0].substring(authparams[0].indexOf("=") + 2, authparams[0].length() - 1);
 
             String timestamp = authparams[1].substring(authparams[1].indexOf("=") + 2, authparams[1].length() - 1);
@@ -67,9 +80,11 @@ public class MyFilter implements Filter {
             }
         }
         filterChain.doFilter(servletRequest,servletResponse);
+        return;
     }
 
     @Override
     public void destroy() {
     }
+
 }

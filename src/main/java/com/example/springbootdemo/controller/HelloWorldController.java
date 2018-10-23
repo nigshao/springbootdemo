@@ -26,6 +26,7 @@ public class HelloWorldController {
     public void testDomain(TestDomain domain,HttpServletResponse rep,HttpServletRequest req){
         System.out.println(domain.getName());
         System.out.println(domain.getDomainSon().getSonName());
+        //buyong dongjiekou zhijie jiu xingle buxi
     }
 
 

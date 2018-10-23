@@ -15,7 +15,6 @@ import java.io.IOException;
 
 /**
  * SpringBoot使用拦截器实现签名认证(鉴权)
- *
  * @author JustryDeng
  * @WebFilter注解指定要被过滤的URL 一个URL会被多个过滤器过滤时, 还可以使用@Order(x)来指定过滤request的先后顺序,x数字越小越先过滤
  * @DATE 2018年9月11日 下午1:18:29
@@ -24,10 +23,9 @@ import java.io.IOException;
 public class SignAutheFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(SignAutheFilter.class);
-    //允许访问的ip
     @Value("${permitted-ips}")
     private String[] permittedIps;
-    //做
+    //jiaban  bazhege shi zuohao xiongdi chejian zhuren xiongdi weismne wokankan ba ta xiehao
     @Value("${secret}")
     private String secret;
 
@@ -61,7 +59,6 @@ public class SignAutheFilter implements Filter {
             MyRequestWrapper mrw = new MyRequestWrapper(request);
             String bodyString = mrw.getBody();
             logger.info("getted requestbody data is ---> " + bodyString);
-
             // 获取几个相关的字符
             // 由于authorization类似于
             // cardid="1234554321",timestamp="9897969594",signature="a69eae32a0ec746d5f6bf9bf9771ae36"
@@ -109,7 +106,5 @@ public class SignAutheFilter implements Filter {
     public static void main(String[] args) {
         String value = "cardid=\"1234554321\"";
         System.out.println(value.indexOf("="));
-
     }
-
 }
