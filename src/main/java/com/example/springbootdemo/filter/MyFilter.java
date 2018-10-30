@@ -17,7 +17,8 @@ import java.security.NoSuchAlgorithmException;
 
 
 @Component
-@WebFilter(urlPatterns = {"/authen/test1", "/hello"})
+//@WebFilter(urlPatterns = {"/authen/test1", "/hello"})
+@WebFilter
 public class MyFilter implements Filter {
 
     Logger log = LoggerFactory.getLogger(MyFilter.class);
@@ -36,22 +37,22 @@ public class MyFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        //log.info("entre authentic  filter！:"+permittedIps[0]);
-        server_log.info("entre authentic  filter！:"+permittedIps[0]);
-        if (Boolean.valueOf(secretSwitch)){
+        //log.info("entre authentic  filter！:"+permittedIps[0]); do
+        server_log.info("entre authentic  filter！:" + permittedIps[0]);
+        if (Boolean.valueOf(secretSwitch)) {
             HttpServletRequest res = (HttpServletRequest) servletRequest;
             HttpServletResponse rep = (HttpServletResponse) servletResponse;
             String authorization = res.getHeader("Authorization");
-            if(StringUtils.isEmpty(authorization)){
-                rep.sendError(333,"anthorization is null!");
-                return ;
+            if (StringUtils.isEmpty(authorization)) {
+                rep.sendError(333, "anthorization is null!");
+                return;
             }
-            System.out.println("auth authrization :" + authorization);
+            server_log.info("auth authrization :" + authorization);
             String[] authparams = authorization.split(",");
             //cardid="1234554321",timestamp="9897969594",signature="a69eae32a0ec746d5f6bf9bf977"
             String cardid = authparams[0].substring(authparams[0].indexOf("=") + 2, authparams[0].length() - 1);
@@ -59,32 +60,35 @@ public class MyFilter implements Filter {
             String timestamp = authparams[1].substring(authparams[1].indexOf("=") + 2, authparams[1].length() - 1);
 
             String signature = authparams[2].substring(authparams[2].indexOf("=") + 2, authparams[2].length() - 1);
-            System.out.println(" cardid :" + cardid + " timestamp : " + timestamp + " signature: " + signature);
+            server_log.info(" cardid :" + cardid + " timestamp : " + timestamp + " signature: " + signature);
             MyRequestWrapper requestWrapper = new MyRequestWrapper(res);
             String bodydata = requestWrapper.getBody();
-            String newSignature="";
+            String newSignature = "";
             try {
-                MDUtils.MD5EncodeForHex(timestamp+secret+bodydata, "utf-8");
+                MDUtils.MD5EncodeForHex(timestamp + secret + bodydata, "utf-8");
 
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
-            if(newSignature.equals(signature)){
-                filterChain.doFilter(res,rep);
+            if (newSignature.equals(signature)) {
+                filterChain.doFilter(res, rep);
                 return;
             }
             try {
-                throw  new Exception("auth authrization failure");
+                throw new Exception("auth authrization failure");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
         filterChain.doFilter(servletRequest,servletResponse);
+        server_log.info("entre here !");
         return;
     }
 
     @Override
     public void destroy() {
+
     }
 
 }

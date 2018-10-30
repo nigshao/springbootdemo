@@ -25,7 +25,7 @@ public class SignAutheFilter implements Filter {
     private static Logger logger = LoggerFactory.getLogger(SignAutheFilter.class);
     @Value("${permitted-ips}")
     private String[] permittedIps;
-    //jiaban  bazhege shi zuohao xiongdi chejian zhuren xiongdi weismne wokankan ba ta xiehao
+
     @Value("${secret}")
     private String secret;
 
@@ -105,6 +105,7 @@ public class SignAutheFilter implements Filter {
 
     public static void main(String[] args) {
         String value = "cardid=\"1234554321\"";
-        System.out.println(value.indexOf("="));
+        value.substring(value.indexOf("=")+1,value.length());
+        System.out.println(value.substring(value.indexOf("=")+1,value.length()));
     }
 }
