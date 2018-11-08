@@ -32,7 +32,7 @@ public class BaseControl {
         }
         JSONObject headerJson = RequestHandler.handlerJson(request);
         log.info("uri:{} , headerJson:{} , params:{} ，header:{}, exception{}",uri,headerJson,JSONObject.toJSON(params),ExceptionUtils.getStackTrace(ex));
-        return "";
+        return "baseControl";
     }
 
 }
