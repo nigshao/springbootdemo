@@ -8,13 +8,13 @@
         <!--   <File name="log" fileName="${logDir}test.log" append="false">
                <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
            </File>-->
-        <RollingFile name="serverInfo" fileName="${logDir}serverInfo2.log"
+        <RollingFile name="serverInfo" fileName="${logDir}/serverInfo2.log"
                      filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
             <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
             <SizeBasedTriggeringPolicy size="50MB"/>
         </RollingFile>
 
-        <RollingFile name="serverError" fileName="${logDir}serverError.log"
+        <RollingFile name="serverError" fileName="${logDir}/serverError.log"
                      filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
             <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
             <SizeBasedTriggeringPolicy size="50MB"/>
