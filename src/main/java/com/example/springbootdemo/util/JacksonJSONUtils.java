@@ -26,15 +26,15 @@ public class JacksonJSONUtils {
         objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
 
         objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        objectMapper.getSerializationConfig().with(simpleDateFormat)
+                .with(MapperFeature.USE_ANNOTATIONS)
+
+                .without(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, false);
         objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
 
         objectMapper.setDateFormat(simpleDateFormat);
-
-        objectMapper.getSerializationConfig().with(simpleDateFormat)
-                .with(MapperFeature.USE_ANNOTATIONS)
-                .without(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         objectMapper.getDeserializationConfig().with(simpleDateFormat)
                 .with(MapperFeature.USE_ANNOTATIONS)
@@ -72,4 +72,3 @@ public class JacksonJSONUtils {
         return object;
     }
 }
-//怎么了 兄弟

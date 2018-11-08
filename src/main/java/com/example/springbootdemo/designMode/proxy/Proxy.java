@@ -12,7 +12,7 @@ public class Proxy implements Sourceable {
         System.out.println("before proxy");
         source = new Source();
         source.method();
-        System.out.println("after proxy");
+        System.out.println("after proxy ");
     }
 
     public static void main(String[] args) {
