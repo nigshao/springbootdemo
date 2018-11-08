@@ -17,7 +17,7 @@ public class LoginIntercepror implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HandlerMethod method = (HandlerMethod) handler;
         method.getMethod().getName();
-        Set<String> urlwhitelist = FileReadUtil.readFile("urlwhitelist");
+        Set<String> urlwhitelist = FileReadUtil.readFile("/urlwhitelist");
         String uri = request.getRequestURI();
         if(!urlwhitelist.contains(uri)){
             throw new BaseException(3333,"urlwhitelist not contain uri");
