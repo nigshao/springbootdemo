@@ -21,7 +21,7 @@ public class LoginIntercepror implements HandlerInterceptor {
         String uri = request.getRequestURI();
         if(!urlwhitelist.contains(uri)){
             throw new BaseException(3333,"urlwhitelist not contain uri");
-        }//nohup sh /usr/local/springboot/run.sh &>/test/null &
+        }
         return true;
     }
 
