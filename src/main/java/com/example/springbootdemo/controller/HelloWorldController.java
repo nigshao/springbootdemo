@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @ServletComponentScan
-public class HelloWorldController {
+public class HelloWorldController extends BaseControl{
     /**
      * 缓冲策略 对应的名字
      */

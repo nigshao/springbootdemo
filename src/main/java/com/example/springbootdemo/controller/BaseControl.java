@@ -1,7 +1,10 @@
 package com.example.springbootdemo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.springbootdemo.execption.DBExceptionEnums;
+import com.example.springbootdemo.execption.ServiceException;
 import com.example.springbootdemo.util.LoggerFactory;
+import com.example.springbootdemo.util.ResponseTools;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,11 +31,13 @@ public class BaseControl {
         for (Map.Entry entry : entries) {
             String key = (String) entry.getKey();
             String[] values = (String[]) entry.getValue();
-            params.put(key, values.length == 1 ? values[0]:JSONObject.toJSONString(values));
+            params.put(key, values.length == 1 ? values[0] : JSONObject.toJSONString(values));
         }
         JSONObject headerJson = RequestHandler.handlerJson(request);
-        log.info("uri:{} , headerJson:{} , params:{} ，header:{}, exception{}",uri,headerJson,JSONObject.toJSON(params),ExceptionUtils.getStackTrace(ex));
-        return "baseControl";
+        String msg = ResponseTools.get().response(new ServiceException(DBExceptionEnums.SYSTEM_ERROR));
+        log.info("uri:{} , params:{} ，header:{}, msg:{}, exception{}", uri, JSONObject.toJSONString(params), headerJson, msg,
+                ExceptionUtils.getStackTrace(ex));
+        return msg;
     }
 
 }
