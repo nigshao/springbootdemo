@@ -22,6 +22,7 @@ public class LoginIntercepror implements HandlerInterceptor {
         if(!urlwhitelist.contains(uri)){
             throw new BaseException(3333,"urlwhitelist not contain uri");
         }
+
         return true;
     }
 

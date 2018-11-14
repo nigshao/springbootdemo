@@ -2,6 +2,7 @@ package com.example.springbootdemo.controller;
 
 import com.example.springbootdemo.config.AppVersion;
 import com.example.springbootdemo.domain.TestDomain;
+import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -30,8 +32,11 @@ public class HelloWorldController extends BaseControl{
     AppVersion appversion;
 
     @RequestMapping("/hello")
-    public String index(HttpServletRequest request, HttpServletResponse response) {
-        return "springboot detail now prot:8007 :" + appversion.getName();
+    public Object index(HttpServletRequest request, HttpServletResponse response) {
+        Map<String,Object>  returnMap = new HashMap<>();
+        returnMap.put("appversion",appversion.getName());
+        return  returnMap;
+        //return "springboot detail now prot:8007 :" + appversion.getName();
     }
 
     @RequestMapping("domain")
