@@ -31,8 +31,14 @@ public class ControllerAspect {
     public void pointCut() {
     }
 
-    @Around(value = "pointCut()")
-    public Object aspectBefore(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Pointcut("@annotation(com.example.springbootdemo.aspect.ZdyAnnotation)")
+    public void myAnnotation() {
+    }
+
+    @Around(value = "myAnnotation()&&@annotation(zdyAnnotation)")
+    public Object aspectBefore(ProceedingJoinPoint joinPoint, ZdyAnnotation zdyAnnotation) throws Throwable {
+        String name = zdyAnnotation.name();
+        serverInfo_log.info("zdyannotation-name :" + name);
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getRequest();
         String uri = request.getRequestURI().toString();

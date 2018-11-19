@@ -17,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 
 
 @Component
-//@WebFilter(urlPatterns = {"/authen/test1", "/hello"})
 @WebFilter
 public class MyFilter implements Filter {
 

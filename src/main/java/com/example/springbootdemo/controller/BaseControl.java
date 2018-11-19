@@ -8,7 +8,6 @@ import com.example.springbootdemo.util.ResponseTools;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +18,12 @@ import java.util.Set;
 
 public class BaseControl {
 
-    Logger log = LoggerFactory.getServerErrorLogger(BaseControl.class);
+   private static final Logger log = LoggerFactory.getServerErrorLogger(BaseControl.class);
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public String handleException(HttpServletRequest request, Exception ex) {
-        String uri = request.getRequestURI().toString();
+        String uri = request.getRequestURI();
         Map<String, String[]> parameterMap = request.getParameterMap();
         Set<Map.Entry<String, String[]>> entries = parameterMap.entrySet();
         Map<String, String> params = new HashMap<>();
@@ -39,5 +38,4 @@ public class BaseControl {
                 ExceptionUtils.getStackTrace(ex));
         return msg;
     }
-
 }
