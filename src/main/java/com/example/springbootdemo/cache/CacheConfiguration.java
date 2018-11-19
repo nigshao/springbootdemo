@@ -20,6 +20,10 @@ public class CacheConfiguration {
         return new EhCacheCacheManager(bean.getObject());
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public  EhCacheManagerFactoryBean ehCacheManagerFactoryBean(){
         EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();

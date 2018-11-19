@@ -13,6 +13,6 @@ public @interface ZdyAnnotation {
     public String name() default "";
 
     public int value() default 1;
-    
+
 
 }

@@ -41,7 +41,6 @@ public class MyFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        //log.info("entre authentic  filter！:"+permittedIps[0]); do
         server_log.info("entre authentic  filter！:" + permittedIps[0]);
         if (Boolean.valueOf(secretSwitch)) {
             HttpServletRequest res = (HttpServletRequest) servletRequest;

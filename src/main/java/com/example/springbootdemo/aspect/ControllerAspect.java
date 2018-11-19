@@ -16,6 +16,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -37,10 +38,14 @@ public class ControllerAspect {
 
     @Around(value = "myAnnotation()&&@annotation(zdyAnnotation)")
     public Object aspectBefore(ProceedingJoinPoint joinPoint, ZdyAnnotation zdyAnnotation) throws Throwable {
+        Object[] args = joinPoint.getArgs();
+        Object obj = args[0];
+        HttpServletRequest request = null;
+        if(obj instanceof HttpServletRequest){
+            request = (HttpServletRequest)obj;
+        }
         String name = zdyAnnotation.name();
         serverInfo_log.info("zdyannotation-name :" + name);
-        HttpServletRequest request = ((ServletRequestAttributes)
-                RequestContextHolder.getRequestAttributes()).getRequest();
         String uri = request.getRequestURI().toString();
         Map<String, String[]> parameterMap = request.getParameterMap();
         Set<Map.Entry<String, String[]>> entries = parameterMap.entrySet();
